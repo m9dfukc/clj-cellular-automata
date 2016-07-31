@@ -40,20 +40,6 @@
      :bottom-right bottom-right
      :sum (+ left right top-left top top-right bottom-left bottom bottom-right)}))
 
-(defn sum-neighbors [coll idx stride]
-   (let [t (- idx stride)
-        b (+ idx stride)]
-     (+
-       (aget coll (- idx 1))
-       (aget coll idx)
-       (aget coll (+ idx 1))
-       (aget coll (- t 1))
-       (aget coll t)
-       (aget coll (+ t 1))
-       (aget coll (- b 1))
-       (aget coll b)
-       (aget coll (+ b 1)))))
-
 (defn evolve-cell [coll idx stride]
   (let [n (neighbors coll idx stride)
         sum (:sum n)
