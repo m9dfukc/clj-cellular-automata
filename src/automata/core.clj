@@ -64,9 +64,6 @@
             buff)))))
 
 (defn setup []
-  (q/frame-rate 30)
-  (q/color-mode :rgb)
-  (q/hint :disable-texture-mipmaps)
   (let [len (* cols rows)
         data (byte-array len)]
     {:cols cols
