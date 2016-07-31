@@ -95,9 +95,9 @@
           (do
             (aset pixels idx (if (pos? (aget grid i)) 0xffffff 0x0000ff))
             (recur (inc i) (+ idx 1)))
-          state))
-    (q/update-pixels img)
-    (q/image img 0 0 width height)
+          (do
+            (q/update-pixels img)
+            (q/image img 0 0 width height))))
     (println (str "draw grid: " (- (System/currentTimeMillis) then) "ms"))
     state))
 
