@@ -1,4 +1,4 @@
-(ns carpet-generator.core
+(ns automata.core
   (:require [quil.core :as q]
             [quil.middleware :as m]))
 
@@ -111,8 +111,8 @@
   (println (str "framerate: " (q/current-frame-rate)))
   (println (str "timestamp: " (System/currentTimeMillis))))
 
-(q/defsketch carpet-generator
-  :title "CA carpet generator"
+(q/defsketch automata
+  :title "2d cellular automata"
   :size [width height]
   :setup setup
   :update update-state

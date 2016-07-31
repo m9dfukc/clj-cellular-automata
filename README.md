@@ -1,4 +1,4 @@
-# carpet-generator
+# cellular-automata
 
 A Quil sketch designed to ... well, that part is up to you.
 
