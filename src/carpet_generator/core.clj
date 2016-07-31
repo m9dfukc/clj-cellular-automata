@@ -2,9 +2,9 @@
   (:require [quil.core :as q]
             [quil.middleware :as m]))
 
-(def cell-size 1)
-(def width 200)
-(def height 200)
+(def cell-size 4)
+(def width 500)
+(def height 500)
 (def cols (int (/ width cell-size)))
 (def rows (int (/ height cell-size)))
 
@@ -23,14 +23,6 @@
         (fn [el]
           (short (if (> (rand 1) prob) 1 0)))
         col))))
-
-(defn populate [cols rows]
-  (let [len (* cols rows)
-        data (short-array len)]
-    {:cols cols
-     :rows rows
-     :grid (fill-rand data 0.98)
-     :img  (q/create-image cols rows :rgb)}))
 
 (defn neighbors [coll idx stride]
   (let [t (- idx stride)
@@ -72,16 +64,23 @@
     (loop [idx (+ cols 1), x 1, y 1]
         (if (< x w)
           (do
-            (aset buff idx (evolve-cell grid idx cols))
+            (aset-short buff idx (evolve-cell grid idx cols))
             (recur (inc idx) (inc x) y))
           (if (< y h)
             (recur (+ idx 2) 1 (inc y))
-            grid)))))
+            buff)))))
 
 (defn setup []
-  (q/frame-rate 120)
+  (q/frame-rate 30)
   (q/color-mode :rgb)
-  (populate cols rows))
+  (q/hint :disable-texture-mipmaps)
+  (let [len (* cols rows)
+        data (short-array len)]
+    {:cols cols
+     :rows rows
+     :grid (fill-rand data 0.8)
+     :img  (q/create-image cols rows :rgb)
+     }))
 
 (defn update-state [state]
   (let [cols (:cols state)
@@ -108,9 +107,9 @@
               (recur (inc i) (+ idx 1)))
           (do (q/update-pixels img)
               state)))
-      (q/image img 0 0))
+      (q/image img 0 0 width height))
   (println (str "framerate: " (q/current-frame-rate)))
-  (println (System/currentTimeMillis)))
+  (println (str "timestamp: " (System/currentTimeMillis))))
 
 (q/defsketch carpet-generator
   :title "CA carpet generator"
